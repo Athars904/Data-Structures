@@ -1,0 +1,114 @@
+#include<iostream>
+using namespace std;
+
+class Queue
+{
+    class Node
+    {
+    public:
+        int data;
+        Node* next;
+
+        Node(int d)
+        {
+            data = d;
+            next = NULL;
+        }
+    };
+
+    int size;
+    Node *head, *tail;
+public:
+    Queue();
+    void enQueue(int d);
+    void deQueue();
+    int getSize();
+    bool isEmpty();
+    void display();
+}; 
+
+int main()
+{
+    Queue s;
+    s.display();
+    cout<<"Size of Queue: "<<s.getSize()<<endl;
+
+    s.enQueue(10);
+    s.enQueue(21);
+    s.enQueue(54);
+    s.enQueue(89);
+    s.enQueue(37);
+    s.enQueue(66);
+    
+    cout<<endl;
+    s.display();
+    
+    cout<<"\nSize of Queue: "<<s.getSize()<<endl<<endl;
+
+    while(!s.isEmpty())
+    {
+        s.deQueue();
+        s.display();
+    }
+
+    cout<<"\nSize of Queue: "<<s.getSize()<<endl;
+}
+
+Queue::Queue()
+{
+    head = NULL;
+    tail = NULL;
+    size = 0;
+}
+void Queue::enQueue(int d)
+{
+    Node *temp = new Node(d);
+    if(isEmpty())
+    {
+        head = temp;
+        tail = temp;
+    }
+    else
+    {
+        tail -> next = temp;
+        tail = tail -> next;
+    }
+    size++;
+}
+void Queue::deQueue()
+{
+    if(isEmpty())
+    {
+        cout<<"Queue is empty!\n";
+        return;
+    }
+    Node *temp = head;
+    head = head -> next;
+
+    temp -> next = NULL;
+    delete temp;
+    size--;
+}
+int Queue::getSize()
+{
+    return size;
+}
+bool Queue::isEmpty()
+{
+    return size == 0;
+}
+void Queue::display()
+{
+    if(isEmpty())
+    {
+        cout<<"Queue is empty!\n";
+        return;
+    }
+    Node *temp = head;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<"  ";
+        temp = temp -> next;
+    }
+    cout<<endl;
+}
